@@ -12,5 +12,5 @@ source=('lw-tray')
 sha256sums=('SKIP')
 
 package() {
-    install -Dm755 "$pkgname" "$pkgdir/opt/lwrap/$pkgname/$pkgname"
+    install -Dm755 "$pkgname" "$pkgdir/opt/lwrap/bin/$pkgname"
 }
