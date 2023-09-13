@@ -1,9 +1,9 @@
 # Maintainer: VHSgunzo <vhsgunzo.github.io>
 
 pkgname='lw-tray'
-pkgver='0.0.3'
+pkgver='0.0.4'
 pkgrel='1'
-pkgdesc='Lutris Wine tray'
+pkgdesc='Lux Wine tray'
 arch=('x86_64')
 url='https://github.com/VHSgunzo/lw-tray'
 license=('MIT')

@@ -1,10 +1,10 @@
 [package]
 name = "lw-tray"
-version = "0.0.3"
+version = "0.0.4"
 readme = "README.md"
 license-file = "LICENSE"
 repository = "https://github.com/VHSgunzo/lw-tray"
-description = "Lutris Wine tray"
+description = "Lux Wine tray"
 
 [profile.release]
 lto = true

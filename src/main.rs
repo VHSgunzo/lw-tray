@@ -81,7 +81,7 @@ impl ksni::Tray for LwTray {
                 visible: if get_env("LU_EXE").is_empty() { true } else { false },
                 submenu: vec![
                     StandardItem {
-                        label: "Lutris Wine".into(),
+                        label: "Lux Wine".into(),
                         icon_name: self.icon.clone().into(),
                         activate: lw_activate("".to_string()),
                         ..Default::default()
@@ -320,7 +320,7 @@ impl ksni::Tray for LwTray {
 
 fn get_lw_apps() -> String {
     shellexec(
-        "grep '^Categories=Lutris Wine App' -lr ''$LW_APPS_DIR'' 2>/dev/null|\
+        "grep '^Categories=Lux Wine Apps' -lr ''$LW_APPS_DIR'' 2>/dev/null|\
                  xargs -I {{}} grep -m2 '^Name=\\|^Icon=' {{}} 2>/dev/null|sed 's|^Name=||g'|\
                  sed ':a;N;$!ba;s|\\nIcon=| ##\\&## |g'|sort -u"
     )
@@ -347,7 +347,7 @@ fn main() {
 
     let mut title = get_env("EXE_NAME");
     if title.is_empty() {
-        title = "Lutris Wine".to_string()
+        title = "Lux Wine".to_string()
     }
 
     let service = ksni::TrayService::new(LwTray {

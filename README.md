@@ -1,2 +1,2 @@
 # lw-tray
-Lutris Wine tray
+Lux Wine tray
