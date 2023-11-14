@@ -1,10 +1,11 @@
 [package]
 name = "lw-tray"
-version = "0.0.4"
+version = "0.0.5"
 readme = "README.md"
 license-file = "LICENSE"
 repository = "https://github.com/VHSgunzo/lw-tray"
 description = "Lux Wine tray"
+edition = "2021"
 
 [profile.release]
 lto = true
@@ -18,5 +19,7 @@ panic = "abort"
 opt-level = 0
 
 [dependencies]
-ksni = "*"
-execute = "*"
+ksni = "0.2.1"
+execute = "0.2.12"
+rust-embed = "5.9.0"
+translation = "1.0.2"
