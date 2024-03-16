@@ -77,6 +77,23 @@ impl ksni::Tray for LwTray {
             }
         }
 
+        let mut appcfg_submenu = Vec::new();
+        if ! self.lw_apps.is_empty() {
+            for app in self.lw_apps.lines() {
+                let app_split = to_vec_string(app.split(" ##&## ").collect());
+                let name = app_split[0].clone();
+                let icon = app_split[1].clone();
+                appcfg_submenu.push(
+                    StandardItem {
+                        label: name.clone().into(),
+                        icon_name: icon.clone().into(),
+                        activate: lw_activate(format!("-appcfg \"{}\"", name.clone())),
+                        ..Default::default()
+                    }.into()
+                );
+            }
+        }
+
         vec![
             SubMenu {
                 label: tr!("Apps").into(),
@@ -238,10 +255,11 @@ impl ksni::Tray for LwTray {
                         activate: lw_activate("-config".to_string()),
                         ..Default::default()
                     }.into(),
-                    StandardItem {
+                    SubMenu {
                         label: tr!("Apps settings").into(),
                         icon_name: self.icon.clone().into(),
-                        activate: lw_activate("-appcfg".to_string()),
+                        submenu: appcfg_submenu,
+                        visible: if self.lw_apps.is_empty() { false } else { true },
                         ..Default::default()
                     }.into(),
                     StandardItem {

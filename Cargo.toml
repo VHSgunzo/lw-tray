@@ -1,6 +1,6 @@
 [package]
 name = "lw-tray"
-version = "0.0.5"
+version = "0.0.6"
 readme = "README.md"
 license-file = "LICENSE"
 repository = "https://github.com/VHSgunzo/lw-tray"
@@ -12,6 +12,7 @@ lto = true
 panic = "abort"
 opt-level = "z"
 strip = "symbols"
+debug  = false
 codegen-units = 1
 
 [profile.dev]
