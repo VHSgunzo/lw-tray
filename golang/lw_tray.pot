@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-14 11:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:82
+msgid "Apps"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:89
+msgid "Open"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:94
+msgid "Lux Wine"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:100
+msgid "DEBUG"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:109 /home/user/Git_Project/LW/lw-tray/src/main.rs:168
+msgid "Wine"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:113
+msgid "Explorer"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:119
+msgid "Task manager"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:125
+msgid "CMD"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:131
+msgid "Control panel"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:137 /home/user/Git_Project/LW/lw-tray/src/main.rs:232
+msgid "Settings"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:143
+msgid "Registry editor"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:149
+msgid "Uninstaller"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:158
+msgid "Kill"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:162
+msgid "EXE"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:174
+msgid "SHELL"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:180
+msgid "ALL"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:189
+msgid "Prefix"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:193
+msgid "Open drive C:\\"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:199
+msgid "Backup"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:205
+msgid "Restore"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:211
+msgid "Clear"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:217
+msgid "Mount backup"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:223
+msgid "Unmount backup"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:242
+msgid "Apps settings"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:248
+msgid "Wine manager"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:254
+msgid "Runtime updater"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:260
+msgid "Winetricks"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:266
+msgid "Forced init"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:272
+msgid "Open SHELL"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:278
+msgid "Shortcut"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:282
+msgid "Create"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:288
+msgid "Remove"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:297
+msgid "Info"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:301
+msgid "Usage"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:307
+msgid "Version"
+msgstr ""
+
+#: /home/user/Git_Project/LW/lw-tray/src/main.rs:319
+msgid "Exit"
+msgstr ""
