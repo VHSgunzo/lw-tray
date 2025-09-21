@@ -1,9 +1,10 @@
 use std::{
     fs,
     env,
+    thread,
     time::Duration,
     process::Stdio,
-    process::{exit, Child}
+    process::exit
 };
 
 use ksni::menu::*;
@@ -16,13 +17,13 @@ use translation::{tr_init, tr};
 struct Translations;
 
 fn get_env(var: &str) -> String {
-    if let Ok(ret) = env::var(var)
-        { ret } else { "".to_string() }
+    env::var(var).unwrap_or_default()
 }
 
-fn shellspawn(command: &str) -> Child {
-    shell(command).spawn()
-        .expect("Shell command failed to start!")
+fn shellspawn(command: &str) {
+    let mut child = shell(command).spawn()
+        .expect("Shell command failed to start!");
+    thread::spawn(move || { let _ = child.wait(); });
 }
 
 fn shellexec(command: &str) -> String {
@@ -33,7 +34,7 @@ fn shellexec(command: &str) -> String {
     ).unwrap()
 }
 
-fn lwexec(command: String) -> Child {
+fn lwexec(command: String) {
     shellspawn(format!("{} {}", get_env("LW_SOURCE"), command).as_str())
 }
 
@@ -53,10 +54,10 @@ fn to_vec_string(argv: Vec<&str>) -> Vec<String> {
 
 impl ksni::Tray for LwTray {
     fn icon_name(&self) -> String {
-        self.icon.clone().into()
+        self.icon.clone()
     }
     fn title(&self) -> String {
-        self.title.clone().into()
+        self.title.clone()
     }
     fn menu(&self) -> Vec<ksni::MenuItem<Self>> {
 
@@ -68,8 +69,8 @@ impl ksni::Tray for LwTray {
                 let icon = app_split[1].clone();
                 apps_submenu.push(
                     StandardItem {
-                        label: name.clone().into(),
-                        icon_name: icon.clone().into(),
+                        label: name.clone(),
+                        icon_name: icon.clone(),
                         activate: lw_activate(format!("-runapp \"{}\"", name.clone())),
                         ..Default::default()
                     }.into()
@@ -85,8 +86,8 @@ impl ksni::Tray for LwTray {
                 let icon = app_split[1].clone();
                 appcfg_submenu.push(
                     StandardItem {
-                        label: name.clone().into(),
-                        icon_name: icon.clone().into(),
+                        label: name.clone(),
+                        icon_name: icon.clone(),
                         activate: lw_activate(format!("-appcfg \"{}\"", name.clone())),
                         ..Default::default()
                     }.into()
@@ -96,26 +97,26 @@ impl ksni::Tray for LwTray {
 
         vec![
             SubMenu {
-                label: tr!("Apps").into(),
-                icon_name: self.icon.clone().into(),
+                label: tr!("Apps"),
+                icon_name: self.icon.clone(),
                 submenu: apps_submenu,
-                visible: if self.lw_apps.is_empty() { false } else { true },
+                visible: !self.lw_apps.is_empty(),
                 ..Default::default()
             }.into(),
             SubMenu {
-                label: tr!("Open").into(),
-                icon_name: self.icon.clone().into(),
-                visible: if get_env("LU_EXE").is_empty() { true } else { false },
+                label: tr!("Open"),
+                icon_name: self.icon.clone(),
+                visible: get_env("LU_EXE").is_empty(),
                 submenu: vec![
                     StandardItem {
-                        label: tr!("Lux Wine").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Lux Wine"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("DEBUG").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("DEBUG"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-debug".to_string()),
                         ..Default::default()
                     }.into()
@@ -123,48 +124,48 @@ impl ksni::Tray for LwTray {
                 ..Default::default()
             }.into(),
             SubMenu {
-                label: tr!("Wine").into(),
-                icon_name: self.icon.clone().into(),
+                label: tr!("Wine"),
+                icon_name: self.icon.clone(),
                 submenu: vec![
                     StandardItem {
-                        label: tr!("Explorer").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Explorer"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-explorer".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Task manager").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Task manager"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-taskmgr".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("CMD").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("CMD"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-cmd".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Control panel").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Control panel"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-control".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Settings").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Settings"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-winecfg".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Registry editor").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Registry editor"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-regedit".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Uninstaller").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Uninstaller"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-uninstaller".to_string()),
                         ..Default::default()
                     }.into()
@@ -172,30 +173,30 @@ impl ksni::Tray for LwTray {
                 ..Default::default()
             }.into(),
             SubMenu {
-                label: tr!("Kill").into(),
-                icon_name: self.icon.clone().into(),
+                label: tr!("Kill"),
+                icon_name: self.icon.clone(),
                 submenu: vec![
                     StandardItem {
-                        label: tr!("EXE").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("EXE"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-killexe".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Wine").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Wine"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-killwine".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("SHELL").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("SHELL"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-killshell".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("ALL").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("ALL"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-exit".to_string()),
                         ..Default::default()
                     }.into(),
@@ -203,42 +204,42 @@ impl ksni::Tray for LwTray {
                 ..Default::default()
             }.into(),
             SubMenu {
-                label: tr!("Prefix").into(),
-                icon_name: self.icon.clone().into(),
+                label: tr!("Prefix"),
+                icon_name: self.icon.clone(),
                 submenu: vec![
                     StandardItem {
-                        label: tr!("Open drive C:\\").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Open drive C:\\"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-openpfx".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Backup").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Backup"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-pfxbackup".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Restore").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Restore"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-pfxrestore".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Clear").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Clear"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-clearpfx".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Mount backup").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Mount backup"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-backupmnt".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Unmount backup").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Unmount backup"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-backupunmnt".to_string()),
                         ..Default::default()
                     }.into()
@@ -246,65 +247,65 @@ impl ksni::Tray for LwTray {
                 ..Default::default()
             }.into(),
             SubMenu {
-                label: tr!("Settings").into(),
-                icon_name: self.icon.clone().into(),
+                label: tr!("Settings"),
+                icon_name: self.icon.clone(),
                 submenu: vec![
                     StandardItem {
-                        label: self.title.clone().into(),
-                        icon_name: self.icon.clone().into(),
+                        label: self.title.clone(),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-config".to_string()),
                         ..Default::default()
                     }.into(),
                     SubMenu {
-                        label: tr!("Apps settings").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Apps settings"),
+                        icon_name: self.icon.clone(),
                         submenu: appcfg_submenu,
-                        visible: if self.lw_apps.is_empty() { false } else { true },
+                        visible: !self.lw_apps.is_empty(),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Wine manager").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Wine manager"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-winemgr".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Runtime updater").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Runtime updater"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-update".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Winetricks").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Winetricks"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-winetricks".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Forced init").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Forced init"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-init".to_string()),
                         ..Default::default()
                     }.into(),
                     StandardItem {
-                        label: tr!("Open SHELL").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Open SHELL"),
+                        icon_name: self.icon.clone(),
                         activate: lw_activate("-shell".to_string()),
                         ..Default::default()
                     }.into(),
                     SubMenu {
-                        label: tr!("Shortcut").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Shortcut"),
+                        icon_name: self.icon.clone(),
                         submenu: vec![
                             StandardItem {
-                                label: tr!("Create").into(),
-                                icon_name: self.icon.clone().into(),
+                                label: tr!("Create"),
+                                icon_name: self.icon.clone(),
                                 activate: lw_activate("-shortcut".to_string()),
                                 ..Default::default()
                             }.into(),
                             StandardItem {
-                                label: tr!("Remove").into(),
-                                icon_name: self.icon.clone().into(),
+                                label: tr!("Remove"),
+                                icon_name: self.icon.clone(),
                                 activate: lw_activate("-rmapp".to_string()),
                                 ..Default::default()
                             }.into()
@@ -312,18 +313,18 @@ impl ksni::Tray for LwTray {
                         ..Default::default()
                     }.into(),
                     SubMenu {
-                        label: tr!("Info").into(),
-                        icon_name: self.icon.clone().into(),
+                        label: tr!("Info"),
+                        icon_name: self.icon.clone(),
                         submenu: vec![
                             StandardItem {
-                                label: tr!("Usage").into(),
-                                icon_name: self.icon.clone().into(),
+                                label: tr!("Usage"),
+                                icon_name: self.icon.clone(),
                                 activate: lw_activate("-help".to_string()),
                                 ..Default::default()
                             }.into(),
                             StandardItem {
-                                label: tr!("Version").into(),
-                                icon_name: self.icon.clone().into(),
+                                label: tr!("Version"),
+                                icon_name: self.icon.clone(),
                                 activate: lw_activate("-version".to_string()),
                                 ..Default::default()
                             }.into()
@@ -334,7 +335,7 @@ impl ksni::Tray for LwTray {
                 ..Default::default()
             }.into(),
             StandardItem {
-                label: tr!("Exit").into(),
+                label: tr!("Exit"),
                 icon_name: "application-exit".into(),
                 activate: Box::new(|_| exit(0)),
                 ..Default::default()

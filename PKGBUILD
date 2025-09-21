@@ -1,7 +1,7 @@
 # Maintainer: VHSgunzo <vhsgunzo.github.io>
 
 pkgname='lw-tray'
-pkgver='0.0.7'
+pkgver='0.0.8'
 pkgrel='1'
 pkgdesc='Lux Wine tray'
 arch=('x86_64')
